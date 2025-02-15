@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="fr" >
+<head>
+  <meta charset="UTF-8">
+  <title>Pc de S@r@h</title>
+  <link rel="stylesheet" href="https://files.catbox.moe/kf1ve6.css">
+
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+ <!-- Écran de démarrage -->
+ <div id="boot-screen">
+  <img src="https://files.catbox.moe/9oyttq.png" 
+       alt="Windows XP Startup" id="boot-image">
+  <audio id="boot-sound" src="https://www.myinstants.com/media/sounds/windows-xp-startup.mp3"></audio>
+</div>
+
+<!-- Contenu principal -->
+<div id="content">
+  <!-- Ici ton HTML existant -->
+</div>
+
+<div id="is-paused"></div>
+<div class="background"></div>
+<div class="icons"></div>
+<div class="webcam" id="webcam-live-stream">
+  <div id="loading"></div>
+</div>
+<div class="chat-wrapper">
+  <div class="chat">
+    <div class="hide-scrollbar"></div>
+    <div class="name">Ry@n</div>
+    <div class="status">Dernier départ 🎬🔥 | ryryGoGo@msn.fr</div>
+    <div class="is-writting">Dernier message reçu à 16:32 le 12/04/2007</div>
+    <div class="avatar-1"></div>
+    <div class="avatar-2"></div>
+    <div class="chat-container">
+      <ul id="discussion"></ul>
+    </div>
+    <div id="writing-holder">
+      <textarea class="chat-writing-box" id="writing-box" placeholder="Your message here..." contenteditable="true"></textarea>
+    </div>
+  </div>
+</div>
+
+<div class="windows windows-nav__left"></div>
+<div class="windows windows-nav__mid"></div>
+<div class="windows windows-nav__right"></div>
+<!-- partial -->
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.0/moment.min.js'></script><script  src="https://files.catbox.moe/mefz15.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+      const bootScreen = document.getElementById("boot-screen");
+      const bootSound = document.getElementById("boot-sound");
+      const content = document.getElementById("content");
+  
+      // Lire le son de démarrage
+      bootSound.play().catch(error => console.log("Auto-play bloqué, interaction requise"));
+  
+      // Attendre 4 secondes puis faire un fondu de l'écran de démarrage
+      setTimeout(() => {
+          bootScreen.style.opacity = "0";
+          content.style.opacity = "1"; // Afficher le contenu du bureau
+      }, 2000); // 4 secondes
+  
+      // Supprimer l'écran après l'animation pour éviter qu'il bloque les interactions
+      setTimeout(() => {
+          bootScreen.style.display = "none";
+      }, 4000); // 6 secondes pour être sûr que l'effet est terminé
+  });
+
+  // Fonction pour déclencher les erreurs Windows XP après 2min20
+  function triggerWindowsXPError() {
+      let errorSound = new Audio('https://www.myinstants.com/media/sounds/windows-xp-error.mp3'); // Son d'erreur Windows XP
+      let finalErrorSound = new Audio('https://files.catbox.moe/64yz8i.mp3'); // Son final à la dernière erreur
+      let errorCount = 0;
+
+      function createErrorWindow() {
+          if (errorCount < 100) { // Afficher 40 erreurs max
+              let errorWindow = document.createElement("div");
+              errorWindow.style.position = "fixed";
+              errorWindow.style.width = "300px";
+              errorWindow.style.height = "150px";
+              errorWindow.style.background = "transparent";
+            
+              errorWindow.style.zIndex = "99999";
+              errorWindow.style.boxShadow = "5px 5px 10px rgba(0,0,0,0.5)";
+              errorWindow.style.top = `${Math.random() * 70 + 10}%`;
+              errorWindow.style.left = `${Math.random() * 70 + 10}%`;
+
+              let errorImage = document.createElement("img");
+              errorImage.src = "https://files.catbox.moe/39rl0o.png";
+              errorImage.style.width = "100%";
+              errorImage.style.height = "100%";
+
+              errorWindow.appendChild(errorImage);
+              document.body.appendChild(errorWindow);
+
+              if (errorCount < 3) {
+                  errorSound.play(); // Joue le son d'erreur Windows XP normal
+              } else {
+                  finalErrorSound.play(); // Joue le son spécial sur la dernière erreur
+              }
+
+              errorCount++;
+              setTimeout(createErrorWindow, 500); // Nouvelle erreur toutes les 0.55 sec
+          }
+      }
+
+      createErrorWindow();
+  }
+
+  // Lancer les erreurs après 2min20 (140000ms)
+  setTimeout(triggerWindowsXPError, 140000);
+</script>
+</body>
+</html>
